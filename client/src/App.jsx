@@ -8,6 +8,7 @@ import UserProfile from "./pages/UserProfile";
 import UploadCars from "./pages/UploadCars";
 import ViewCars from "./pages/ViewCars";
 import CarDetail from "./pages/CarDetail";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/upload-cars" element={<UploadCars />} />
         <Route path="/view-cars" element={<ViewCars />} />
