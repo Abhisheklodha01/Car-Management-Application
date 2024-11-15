@@ -6,7 +6,7 @@ import {
     Registercontroller,
 } from "../controllers/user.controller.js";
 import { isAuthenticated } from "../middlewares/auth.middleware.js";
-import { searchJob } from "../controllers/jobs.controller.js";
+
 
 const router = Router();
 
