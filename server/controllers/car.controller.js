@@ -5,11 +5,16 @@ export const CreateCarController = async (req, res) => {
   try {
     const imageUrls = req.files.map((file) => file.path);
     const { title, description, tags } = req.body;
+    let carId;
+    for(let i = 0; i <7; i++) {
+      
+    }
 
     const car = await Car.create({
       userId: req.user._id,
       title,
       description,
+      carId: carId,
       tags: tags.split(","),
       images: imageUrls,
     });

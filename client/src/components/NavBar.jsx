@@ -27,7 +27,7 @@ const NavBar = () => {
             <span className="relative z-20">Login</span>
           </button>
         </Link>
-        <Link to={"/login"} className="md:mr-5">
+        <Link to={"/signup"} className="md:mr-5">
           <button className="px-6 py-2 rounded-full relative bg-slate-700 text-white text-sm hover:shadow-2xl hover:shadow-white/[0.1] transition duration-200 border border-slate-600">
             <div className="absolute inset-x-0 h-px w-1/2 mx-auto -top-px shadow-2xl  bg-gradient-to-r from-transparent via-teal-500 to-transparent" />
             <span className="relative z-20">Signup</span>
