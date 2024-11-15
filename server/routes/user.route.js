@@ -14,7 +14,6 @@ router.post("/signup", Registercontroller);
 router.post("/login", Logincontroller);
 router.put("/forgot-password", ForgotPasswordController);
 router.get("/user-profile", isAuthenticated, GetUserProfileController);
-router.get("/jobs", searchJob)
 
 
 export default router
