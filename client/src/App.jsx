@@ -9,8 +9,27 @@ import UploadCars from "./pages/UploadCars";
 import ViewCars from "./pages/ViewCars";
 import CarDetail from "./pages/CarDetail";
 import ForgotPassword from "./pages/ForgotPassword";
+import Contex, { userContex } from "./contex/UserContex";
+import { useContext, useEffect } from "react";
 
 function App() {
+  const { isAuthenticated, setUser, setIsAuthenticated } =
+    useContext(userContex);
+  const CheckUserIsAuthenticatedOrNot = async () => {
+    try {
+      const response = await Contex();
+      setIsAuthenticated(true);
+      setUser(response?.data.user);
+    } catch (error) {
+      console.log(error);
+      setIsAuthenticated(false);
+    }
+  };
+
+  useEffect(() => {
+    CheckUserIsAuthenticatedOrNot();
+  }, [isAuthenticated]);
+
   return (
     <BrowserRouter>
       <NavBar />
