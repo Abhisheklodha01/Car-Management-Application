@@ -1,7 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { backendUrl } from "../utils/server.js";
+import { toast } from "react-hot-toast";
 
 const ForgotPassword = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.put(
+        `${backendUrl}/users/forgot-password`,
+        {
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      toast.success(data.message, {
+        position: "top-center",
+      });
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+
+      toast.error(error.response.data.message, {
+        position: "top-center",
+      });
+    }
+  };
   return (
     <div className="flex items-center justify-center h-screen bg-gray-300">
       <div
@@ -11,7 +45,7 @@ const ForgotPassword = () => {
         <h1 className="text-2xl font-bold text-center text-gray-700">
           Forgot Password
         </h1>
-        <form className="mt-6">
+        <form onSubmit={handleSubmit} className="mt-6">
           <div className="mb-4">
             <label className="block mb-2 text-sm font-bold text-gray-600">
               Email
@@ -21,6 +55,8 @@ const ForgotPassword = () => {
               name="email"
               className="w-full px-4 py-2 border rounded focus:outline-none border-gray-500
                       focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               required
             />
           </div>
@@ -33,6 +69,8 @@ const ForgotPassword = () => {
               name="password"
               className="w-full px-4 py-2 border rounded focus:outline-none border-gray-500
                       focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
               required
             />
             <Link className="text-green-500">Back To Login &rarr;</Link>
