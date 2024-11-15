@@ -8,7 +8,6 @@ dotenv.config();
 export const Registercontroller = async (req, res) => {
 
     const { name, email, password, phoneNumber } = req.body;
-    console.log(name, email, password, phoneNumber);
 
     try {
         if (!name || !email || !password || !phoneNumber) {
@@ -19,6 +18,7 @@ export const Registercontroller = async (req, res) => {
         }
 
         const existedUser = await User.findOne({ email });
+        
         if (existedUser) {
             return res.status(400).json({
                 success: false,
