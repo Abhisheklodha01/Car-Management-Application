@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { backendUrl } from "../utils/server";
 import { toast } from "react-hot-toast";
+import { userContex } from "../contex/UserContex.js";
 
 const CarDetail = () => {
   const { carId } = useParams();
   const [carDetail, setCarDetail] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const { user } = useContext(userContex);
   const getCarDetails = async (carId) => {
-    setLoading(true)
+    setLoading(true);
     try {
       const { data } = await axios.get(
         `${backendUrl}/cars/getcardetail/${carId}`
@@ -18,9 +20,9 @@ const CarDetail = () => {
         position: "top-center",
       });
       setCarDetail(data.car);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -31,15 +33,17 @@ const CarDetail = () => {
     <div className="min-h-screen bg-gray-300">
       {loading ? (
         <div
-        className="animate-spin inline-block size-16 md:size-32 border-[3px] border-current
+          className="animate-spin inline-block size-16 md:size-32 border-[3px] border-current
          border-t-transparent text-blue-600 rounded-full
           dark:text-blue-500 mt-44 ml-32 md:mt-52 md:ml-[600px]"
-        role="status"
-        aria-label="loading"
-      >
-        <span className="sr-only"></span>
-      </div>
-      ) : ""}
+          role="status"
+          aria-label="loading"
+        >
+          <span className="sr-only"></span>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="text-lg text-gray-700 flex flex-col gap-5 m-10 mt-0">
         <h1 className="mt-16">
           <strong>Car Name: </strong> {carDetail?.title}
@@ -52,6 +56,9 @@ const CarDetail = () => {
         </h1>
         <h1>
           <strong>Description: </strong> {carDetail?.description}
+        </h1>
+        <h1>
+          <strong>User Name: </strong> {user?.name}
         </h1>
       </div>
       <h1 className="text-2xl font-bold text-gray-700 text-center">Images:</h1>
