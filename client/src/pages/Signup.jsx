@@ -12,12 +12,14 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [loading, setLoading] = useState(false)
   const { setIsAuthenticated, setUser } = useContext(
     userContex
   );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       const { data } = await axios.post(
         `${backendUrl}/users/signup`,
@@ -39,10 +41,12 @@ const Signup = () => {
       toast.success(data.message, {
         position: "top-center",
       });
+      setLoading(false)
       setIsAuthenticated(true);
       setUser(data.user)
       navigate("/user-profile");
     } catch (error) {
+      setLoading(false)
       toast.error(error.response.data.message, {
         position: "top-center",
       });
@@ -120,10 +124,22 @@ const Signup = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none"
+            className="w-full py-2 text-white bg-blue-500 rounded
+             hover:bg-blue-600 focus:outline-none"
           >
-            Register &rarr;
+            {loading ? (
+              <div
+                className="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-gray-400 rounded-full"
+                role="status"
+                aria-label="loading"
+              >
+                <span className="sr-only"></span>
+              </div>
+            ) : (
+              <p>Signup &rarr;</p>
+            )}
           </button>
+          
         </form>
         <p className="mt-6 text-sm text-center text-gray-600">
           Already have an account?{" "}

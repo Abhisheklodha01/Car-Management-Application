@@ -7,7 +7,9 @@ import { toast } from "react-hot-toast";
 const CarDetail = () => {
   const { carId } = useParams();
   const [carDetail, setCarDetail] = useState([]);
+  const [loading, setLoading] = useState(false)
   const getCarDetails = async (carId) => {
+    setLoading(true)
     try {
       const { data } = await axios.get(
         `${backendUrl}/cars/getcardetail/${carId}`
@@ -15,11 +17,10 @@ const CarDetail = () => {
       toast.success(data.message, {
         position: "top-center",
       });
-      console.log(data);
-
       setCarDetail(data.car);
+      setLoading(false)
     } catch (error) {
-      console.log(error);
+      setLoading(false)
     }
   };
   useEffect(() => {
@@ -28,6 +29,17 @@ const CarDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-300">
+      {loading ? (
+        <div
+        className="animate-spin inline-block size-16 md:size-32 border-[3px] border-current
+         border-t-transparent text-blue-600 rounded-full
+          dark:text-blue-500 mt-44 ml-32 md:mt-52 md:ml-[600px]"
+        role="status"
+        aria-label="loading"
+      >
+        <span className="sr-only"></span>
+      </div>
+      ) : ""}
       <div className="text-lg text-gray-700 flex flex-col gap-5 m-10 mt-0">
         <h1 className="mt-16">
           <strong>Car Name: </strong> {carDetail?.title}

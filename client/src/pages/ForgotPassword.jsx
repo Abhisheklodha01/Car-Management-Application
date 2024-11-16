@@ -8,8 +8,10 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { data } = await axios.put(
         `${backendUrl}/users/forgot-password`,
@@ -27,6 +29,7 @@ const ForgotPassword = () => {
       toast.success(data.message, {
         position: "top-center",
       });
+      setLoading(false);
       navigate("/login");
     } catch (error) {
       console.log(error);
@@ -34,6 +37,7 @@ const ForgotPassword = () => {
       toast.error(error.response.data.message, {
         position: "top-center",
       });
+      setLoading(true);
     }
   };
   return (
@@ -78,9 +82,19 @@ const ForgotPassword = () => {
           <button
             type="submit"
             className="w-full py-2 text-white bg-blue-500 rounded
-           hover:bg-blue-600 focus:outline-none"
+             hover:bg-blue-600 focus:outline-none"
           >
-            Change Password &rarr;
+            {loading ? (
+              <div
+                className="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-gray-400 rounded-full"
+                role="status"
+                aria-label="loading"
+              >
+                <span className="sr-only"></span>
+              </div>
+            ) : (
+              <p>Change Password &rarr;</p>
+            )}
           </button>
         </form>
       </div>

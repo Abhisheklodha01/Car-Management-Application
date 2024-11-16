@@ -9,12 +9,12 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setIsAuthenticated, setUser } = useContext(
-    userContex
-  );
+  const [loading, setLoading] = useState(false);
+  const { setIsAuthenticated, setUser } = useContext(userContex);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { data } = await axios.post(
         `${backendUrl}/users/login`,
@@ -33,13 +33,15 @@ const Login = () => {
       toast.success(data.message, {
         position: "top-center",
       });
-      setIsAuthenticated(true)
-      setUser(data.user)
+      setIsAuthenticated(true);
+      setUser(data.user);
+      setLoading(false);
       navigate("/user-profile");
     } catch (error) {
       toast.error(error.response.data.message, {
         position: "top-center",
       });
+      setLoading(false);
     }
   };
 
@@ -93,7 +95,17 @@ const Login = () => {
             className="w-full py-2 text-white bg-blue-500 rounded
              hover:bg-blue-600 focus:outline-none"
           >
-            Login &rarr;
+            {loading ? (
+              <div
+                className="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-gray-400 rounded-full"
+                role="status"
+                aria-label="loading"
+              >
+                <span className="sr-only"></span>
+              </div>
+            ) : (
+              <p>Login &rarr;</p>
+            )}
           </button>
         </form>
         <p className="mt-6 text-sm text-center text-gray-600">

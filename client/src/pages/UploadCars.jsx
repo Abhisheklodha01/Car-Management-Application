@@ -8,6 +8,7 @@ const UploadCars = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("CarStore-Auth_Token");
 
   const handleFileChange = (e) => {
@@ -34,7 +35,7 @@ const UploadCars = () => {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("tags", tags);
-
+    setLoading(true);
     try {
       const { data } = await axios.post(`${backendUrl}/cars/upload`, formData, {
         headers: {
@@ -49,12 +50,14 @@ const UploadCars = () => {
       setTitle("");
       setDescription("");
       setTags("");
+      setLoading(false);
     } catch (error) {
       console.log(error);
-      
+
       toast.error(error.response.data.message, {
         position: "top-center",
       });
+      setLoading(false);
     }
   };
 
@@ -137,7 +140,17 @@ const UploadCars = () => {
             className="w-full py-2 text-white bg-blue-500 rounded
                       hover:bg-blue-600 focus:outline-none"
           >
-            Upload Car
+            {loading ? (
+              <div
+                className="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-gray-400 rounded-full"
+                role="status"
+                aria-label="loading"
+              >
+                <span className="sr-only"></span>
+              </div>
+            ) : (
+              "Upload Car"
+            )}
           </button>
         </form>
       </div>
