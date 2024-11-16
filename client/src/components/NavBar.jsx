@@ -2,11 +2,10 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { userContex } from "../contex/UserContex.js";
-import { TbUserEdit } from "react-icons/tb";
 import toast from "react-hot-toast";
 const NavBar = () => {
   const [nav, setNav] = useState(false);
-  const { isAthenticated } = useContext(userContex);
+  const { isAuthenticated } = useContext(userContex);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -33,7 +32,7 @@ const NavBar = () => {
           Upload Cars
         </Link>
       </div>
-      {isAthenticated ? (
+      {isAuthenticated ? (
         <div>
           <Link to={"/login"} className="mr-5">
             <button className="px-6 py-2 rounded-full relative bg-slate-700 text-white text-sm hover:shadow-2xl hover:shadow-white/[0.1] transition duration-200 border border-slate-600">
@@ -80,7 +79,7 @@ const NavBar = () => {
           className="flex flex-col z-20 justify-center items-center absolute top-0 left-0
          w-full h-screen bg-slate-800 text-gray-200"
         >
-          {isAthenticated === true ? (
+          {isAuthenticated === true ? (
             <div className=" flex flex-col justify-center items-center">
               <Link to={"/"} className="mb-10">
                 Home
