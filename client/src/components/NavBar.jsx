@@ -19,7 +19,7 @@ const NavBar = () => {
   return (
     <div className="h-16 flex flex-row justify-between items-center">
       <div className="">
-        <h1 className="p-4 text-xl text-gray-700">CarStore</h1>
+        <Link to={"/"} className="p-4 text-xl text-gray-700">CarStore</Link>
       </div>
       {isAuthenticated === true ? (
         <div className="hidden md:inline">
