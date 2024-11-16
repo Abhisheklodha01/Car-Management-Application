@@ -1,20 +1,17 @@
 import Car from "../models/car.model.js";
-import { cloudinary } from "../middlewares/cloudinary.js";
+import { uploadToCloudinary } from "../middlewares/cloudinary.js";
 
 export const CreateCarController = async (req, res) => {
   try {
-    const imageUrls = req.files.map((file) => file.path);
+    const files = req.files
+    const imageUrls = files.map((file) => file.path);
     const { title, description, tags } = req.body;
-    let carId;
-    for(let i = 0; i <7; i++) {
-      
-    }
-
+     
     const car = await Car.create({
       userId: req.user._id,
       title,
       description,
-      carId: carId,
+      carId: Date.now(),
       tags: tags.split(","),
       images: imageUrls,
     });
@@ -85,7 +82,7 @@ export const DeleteCarController = async (req, res) => {
 
     for (const image of car.images) {
       const publicId = image.split("/").pop().split(".")[0];
-      await cloudinary.uploader.destroy(publicId);
+      await uploadToCloudinary.uploader.destroy(publicId);
     }
 
     await car.deleteOne();

@@ -1,24 +1,38 @@
-import { v2 as cloudinary } from "cloudinary";
-import { CloudinaryStorage } from "multer-storage-cloudinary";
-import multer from "multer";
-import dotenv from "dotenv";
+import { v2 as cloudinaryV2 } from 'cloudinary';
 
-dotenv.config();
-
-cloudinary.config({
+cloudinaryV2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: "cars",
-    allowed_formats: ["jpg", "jpeg", "png"],
-  },
-});
+export const uploadToCloudinary = async (req, res, next) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({
+       success: false,
+       message: 'files not provided' 
+      });
+  }
 
-const upload = multer({ storage });
+  try {
+    const uploads = await Promise.all(
+      req.files.map((file) => {
+        return cloudinaryV2.uploader.upload_stream({ folder: 'cars' }, (error, result) => {
+          if (error) throw error;
+          return result.secure_url;
+        }).end(file.buffer);
+      })
+    );
 
-export { cloudinary, upload };
+    req.files = uploads;
+    next();
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      success: false,
+      message: 'Cloudinary upload failed',
+      error
+    });
+  }
+};
