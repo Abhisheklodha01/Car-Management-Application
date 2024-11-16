@@ -38,10 +38,15 @@ const NavBar = () => {
         onClick={() => setNav(!nav)}
         className="md:hidden cursor-pointer pr-4 z-30 text-gray-700"
       >
-        {nav ? <FaTimes size={30} className="text-gray-300 mr-36 mt-10" /> : <FaBars size={30}  />}
+        {nav ? (
+          <FaTimes size={30} className="text-gray-300 mr-36 mt-10" />
+        ) : (
+          <FaBars size={30} />
+        )}
       </div>
       {nav && (
         <div
+          onClick={() => setNav(!nav)}
           className="flex flex-col z-20 justify-center items-center absolute top-0 left-0
          w-full h-screen bg-slate-800 text-gray-200"
         >
@@ -51,9 +56,7 @@ const NavBar = () => {
           <Link to={"/view-cars"} className="mb-10">
             View Cars
           </Link>
-          <Link to={"/upload-cars"}>
-            Upload Cars
-          </Link>
+          <Link to={"/upload-cars"}>Upload Cars</Link>
         </div>
       )}
     </div>
