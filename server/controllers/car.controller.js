@@ -1,5 +1,5 @@
 import Car from "../models/car.model.js";
-import { v2 as cloudinary } from 'cloudinary'
+import { v2 as cloudinary } from "cloudinary";
 
 export const CreateCarController = async (req, res) => {
   try {
@@ -59,9 +59,10 @@ export const GetCarByIdController = async (req, res) => {
     return res.status(200).json({
       success: false,
       message: "Car details fetched successfully",
+      car,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Error fetching car",
       error,

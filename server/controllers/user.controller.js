@@ -46,7 +46,6 @@ export const Registercontroller = async (req, res) => {
             token,
         });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             message: "internal server error please try again later",
@@ -95,7 +94,6 @@ export const Logincontroller = async (req, res) => {
                 token,
             });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             message: "internal server error please try again later",
@@ -139,7 +137,6 @@ export const ForgotPasswordController = async (req, res) => {
             user,
         });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             message: "internal server error please try again later",

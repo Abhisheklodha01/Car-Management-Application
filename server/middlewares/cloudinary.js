@@ -35,8 +35,6 @@ export const uploadToCloudinary = async (req, res, next) => {
     req.files = uploads;
     next();
   } catch (error) {
-    console.log(error);
-
     return res.status(500).json({
       success: false,
       message: "Cloudinary upload failed",
