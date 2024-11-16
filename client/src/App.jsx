@@ -9,26 +9,33 @@ import UploadCars from "./pages/UploadCars";
 import ViewCars from "./pages/ViewCars";
 import CarDetail from "./pages/CarDetail";
 import ForgotPassword from "./pages/ForgotPassword";
-import Contex, { userContex } from "./contex/UserContex";
+import { userContex } from "./contex/UserContex";
 import { useContext, useEffect } from "react";
+import { backendUrl } from "./utils/server";
+import axios from "axios";
 
 function App() {
-  const { isAuthenticated, setUser, setIsAuthenticated } =
+  const { isAuthenticated, setUser, setIsAuthenticated} =
     useContext(userContex);
-  const CheckUserIsAuthenticatedOrNot = async () => {
-    try {
-      const response = await Contex();
-      setIsAuthenticated(true);
-      setUser(response?.data.user);
-    } catch (error) {
-      console.log(error);
-      setIsAuthenticated(false);
-    }
-  };
-
+    const token = localStorage.getItem("CarStore-Auth_Token");
   useEffect(() => {
-    CheckUserIsAuthenticatedOrNot();
-  }, [isAuthenticated]);
+    axios
+      .get(`${backendUrl}/users/user-profile`, {
+        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+
+      })
+      .then((res) => {
+        setUser(res.data.user)
+        setIsAuthenticated(true)
+      })
+      .catch((error) => {
+        setUser({})
+        setIsAuthenticated(false)
+      });
+  }, [isAuthenticated])
 
   return (
     <BrowserRouter>
