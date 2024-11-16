@@ -22,8 +22,8 @@ const UploadCars = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (files.length < 10) {
-      toast.error("Minimum 10 images are required", {
+    if (files.length > 10) {
+      toast.error("Maximum 10 images can be uploaded", {
         position: "top-center",
       });
       return;
@@ -108,7 +108,7 @@ const UploadCars = () => {
           </div>
           <div className="mb-4">
             <label className="block mb-2 text-sm font-bold text-gray-600">
-              Upload Images (minimum 10)
+              Upload Images (max 10)
             </label>
             <input
               type="file"
