@@ -48,7 +48,7 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/upload-cars" element={<UploadCars />} />
         <Route path="/view-cars" element={<ViewCars />} />
-        <Route path="/cars:carId" element={<CarDetail />} />
+        <Route path="/cardetail/:carId" element={<CarDetail />} />
       </Routes>
       <Footer />
     </BrowserRouter>

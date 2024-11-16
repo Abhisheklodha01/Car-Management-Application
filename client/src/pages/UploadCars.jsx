@@ -50,6 +50,8 @@ const UploadCars = () => {
       setDescription("");
       setTags("");
     } catch (error) {
+      console.log(error);
+      
       toast.error(error.response.data.message, {
         position: "top-center",
       });

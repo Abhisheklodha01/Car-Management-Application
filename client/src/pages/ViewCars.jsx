@@ -32,8 +32,6 @@ const ViewCars = () => {
   }, [refresh]);
 
   const deleteCar = async (id) => {
-    console.log(id);
-    
     try {
       const { data } = await axios.delete(
         `${backendUrl}/cars/deletecar/${id}`,
@@ -46,7 +44,6 @@ const ViewCars = () => {
       });
       setRefresh(!refresh);
     } catch (error) {
-      console.log(error);
       toast.error(error.response.data.message, {
         position: "top-center",
       });
@@ -62,7 +59,7 @@ const ViewCars = () => {
       <div className="mt-10 mb-10">
         {cars.map((car, index) => (
           <div
-            className="flex gap-5 m-5 ml-3 mr-3 md:mr-0  flex-col
+            className="flex gap-5 m-5 ml-3 mr-6 md:mr-0  flex-col
            bg-white p-6 rounded-md mx-auto"
             key={car._id}
           >
@@ -82,7 +79,11 @@ const ViewCars = () => {
               <strong>User Name:</strong> {user?.name}
             </p>
             <div className="flex flex-row">
-              <Link className=" bg-green-500 py-2 px-8 rounded-md text-white text-center">
+              <Link
+                to={`/cardetail/${car._id}`}
+                className=" bg-green-500 py-2 px-8 
+              rounded-md text-white text-center"
+              >
                 View Full details
               </Link>
               <button
