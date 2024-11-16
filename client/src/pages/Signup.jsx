@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { backendUrl } from "../utils/server.js";
+import { userContex } from "../contex/UserContex.js";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -11,6 +12,9 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const { setIsAuthenticated, setUser } = useContext(
+    userContex
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,10 +39,10 @@ const Signup = () => {
       toast.success(data.message, {
         position: "top-center",
       });
+      setIsAuthenticated(true);
+      setUser(data.user)
       navigate("/user-profile");
     } catch (error) {
-      console.log(error);
-      
       toast.error(error.response.data.message, {
         position: "top-center",
       });
