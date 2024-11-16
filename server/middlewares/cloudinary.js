@@ -1,4 +1,4 @@
-import { v2 as cloudinaryV2 } from 'cloudinary';
+import { v2 as cloudinaryV2 } from "cloudinary";
 
 cloudinaryV2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -9,21 +9,29 @@ cloudinaryV2.config({
 export const uploadToCloudinary = async (req, res, next) => {
   if (!req.files || req.files.length === 0) {
     return res.status(400).json({
-       success: false,
-       message: 'files not provided' 
-      });
+      success: false,
+      message: "files not provided",
+    });
   }
 
   try {
     const uploads = await Promise.all(
       req.files.map((file) => {
-        return cloudinaryV2.uploader.upload_stream({ folder: 'cars' }, (error, result) => {
-          if (error) throw error;
-          return result.secure_url;
-        }).end(file.buffer);
+        return new Promise((resolve, reject) => {
+          const uploadStream = cloudinaryV2.uploader.upload_stream(
+            { folder: "cars" },
+            (error, result) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(result.secure_url);
+              }
+            }
+          );
+          uploadStream.end(file.buffer);
+        });
       })
     );
-
     req.files = uploads;
     next();
   } catch (error) {
@@ -31,8 +39,8 @@ export const uploadToCloudinary = async (req, res, next) => {
 
     return res.status(500).json({
       success: false,
-      message: 'Cloudinary upload failed',
-      error
+      message: "Cloudinary upload failed",
+      error,
     });
   }
 };

@@ -21,6 +21,12 @@ const UploadCars = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (files.length < 10) {
+      toast.error("Minimum 10 images are required", {
+        position: "top-center",
+      });
+      return;
+    }
     const formData = new FormData();
     files.forEach((file) => {
       formData.append("files", file);
