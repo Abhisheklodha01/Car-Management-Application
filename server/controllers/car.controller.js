@@ -1,11 +1,11 @@
 import Car from "../models/car.model.js";
-import { uploadToCloudinary } from "../middlewares/cloudinary.js";
+import { v2 as cloudinary } from 'cloudinary'
 
 export const CreateCarController = async (req, res) => {
   try {
-    const files = req.files  
+    const files = req.files;
     const { title, description, tags } = req.body;
-     
+
     const car = await Car.create({
       userId: req.user._id,
       title,
@@ -70,8 +70,10 @@ export const GetCarByIdController = async (req, res) => {
 };
 
 export const DeleteCarController = async (req, res) => {
+  const id = req.params.id;
+
   try {
-    const car = await Car.findById(req.params.id);
+    const car = await Car.findById(id);
     if (!car) {
       return res.status(404).json({
         success: false,
@@ -80,19 +82,19 @@ export const DeleteCarController = async (req, res) => {
     }
 
     for (const image of car.images) {
-      const publicId = image.split("/").pop().split(".")[0];
-      await uploadToCloudinary.uploader.destroy(publicId);
+      const publicId = image.split("/").slice(-1)[0].split(".")[0];
+      await cloudinary.uploader.destroy(`cars/${publicId}`);
     }
 
     await car.deleteOne();
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Car deleted successfully",
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Error deleting car",
+      message: "Error while deleting a car",
       error,
     });
   }

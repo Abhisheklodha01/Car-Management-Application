@@ -21,7 +21,7 @@ const UploadCars = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (files.length < 10) {
+    if (files.length < 1) {
       toast.error("Minimum 10 images are required", {
         position: "top-center",
       });

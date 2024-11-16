@@ -22,6 +22,6 @@ router.post(
 
 router.get("/getcars", isAuthenticated, GetCarsController);
 router.get("/getcars:id", GetCarByIdController);
-router.delete("/deletecars:id", DeleteCarController);
+router.delete("/deletecar/:id", DeleteCarController);
 
 export default router;
