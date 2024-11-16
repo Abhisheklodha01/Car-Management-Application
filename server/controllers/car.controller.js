@@ -3,8 +3,7 @@ import { uploadToCloudinary } from "../middlewares/cloudinary.js";
 
 export const CreateCarController = async (req, res) => {
   try {
-    const files = req.files
-    const imageUrls = files.map((file) => file.path);
+    const files = req.files  
     const { title, description, tags } = req.body;
      
     const car = await Car.create({
@@ -13,7 +12,7 @@ export const CreateCarController = async (req, res) => {
       description,
       carId: Date.now(),
       tags: tags.split(","),
-      images: imageUrls,
+      images: files,
     });
 
     return res.status(200).json({
