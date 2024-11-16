@@ -35,7 +35,7 @@ const CarDetail = () => {
         <div
           className="animate-spin inline-block size-16 md:size-32 border-[3px] border-current
          border-t-transparent text-blue-600 rounded-full
-          dark:text-blue-500 mt-44 ml-32 md:mt-52 md:ml-[600px]"
+          dark:text-blue-500 mt-52 ml-36 md:mt-52 md:ml-[600px]"
           role="status"
           aria-label="loading"
         >

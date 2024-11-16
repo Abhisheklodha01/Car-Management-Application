@@ -88,27 +88,27 @@ const NavBar = () => {
          w-full h-screen bg-slate-800 text-gray-200"
         >
           {isAuthenticated === true ? (
-            <div className=" flex flex-col justify-center items-center">
-              <Link to={"/"} className="mb-10">
+            <div className=" flex flex-col items-center justify-center">
+              <Link to={"/"} className="mb-10 text-center">
                 Home
               </Link>
-              <Link to={"/view-cars"} className="mb-10">
+              <Link to={"/view-cars"} className="mb-10 text-center">
                 View Cars
               </Link>
-              <Link className="mb-10" to={"/upload-cars"}>
+              <Link className="mb-10 text-center" to={"/upload-cars"}>
                 Upload Cars
               </Link>
-              <Link className="mb-10" to={"/upload-cars"}>
+              <Link className="mb-10 text-center" to={"/upload-cars"}>
                 Your Profile
               </Link>
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout} className="text-center items-center">Logout</button>
             </div>
           ) : (
             <div className=" flex flex-col justify-center items-center">
-              <Link to={"/"} className="mb-10">
+              <Link to={"/"} className="mb-10 text-center">
                 Home
               </Link>
-              <Link to={"/view-cars"} className="mb-10">
+              <Link to={"/view-cars"} className="mb-10 text-center">
                 Login
               </Link>
               <Link to={"/upload-cars"}>Signup</Link>
