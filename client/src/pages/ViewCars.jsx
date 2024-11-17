@@ -74,7 +74,7 @@ const ViewCars = () => {
           <span className="sr-only"></span>
         </div>
       ) : (
-        <div className="mt-10 mb-10 pr-8">
+        <div className="mt-10 mb-10">
           {cars.map((car, index) => (
             <div
               className="flex gap-5 m-5 ml-3 mr-2 md:mr-0  flex-col
