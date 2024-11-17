@@ -60,7 +60,7 @@ const Home = () => {
               <strong>Tags:</strong> {car.tags.join(", ")}
             </p>
             <p>
-              <strong>User:</strong> {car?.name || car?.userId}
+              <strong>User:</strong> {car?.user || car?.userId}
             </p>
             <div className="flex flex-row">
               <Link

@@ -29,7 +29,7 @@ const NavBar = () => {
           <Link to={"/view-cars"} className="hover:text-amber-700 ml-10 mr-20">
             View Cars
           </Link>
-          <Link to={"/upload-cars"} className="hover:text-amber-700">
+          <Link to={"/user-profile"} className="hover:text-amber-700">
            Your Profile
           </Link>
         </div>
@@ -98,7 +98,7 @@ const NavBar = () => {
               <Link className="mb-10 text-center" to={"/upload-cars"}>
                 Upload Cars
               </Link>
-              <Link className="mb-10 text-center" to={"/upload-cars"}>
+              <Link className="mb-10 text-center" to={"/user-profile"}>
                 Your Profile
               </Link>
               <button onClick={handleLogout} className="text-center items-center">Logout</button>
