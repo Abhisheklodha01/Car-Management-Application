@@ -1,10 +1,11 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./db/index.js";
 import { config } from "dotenv";
 import userRouter from "./routes/user.route.js";
 import carRouter from "./routes/car.route.js";
+import bodyParser from "body-parser";
 
 config();
 
@@ -17,6 +18,8 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+
 
 connectDB();
 

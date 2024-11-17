@@ -100,3 +100,43 @@ export const DeleteCarController = async (req, res) => {
     });
   }
 };
+
+export const UpdateCarDetails = async (req, res) => {
+  const files = req.files;
+  const { title, description, tags } = req.body;
+  const id = req.params.id;
+  try {
+    const car = await Car.findById(id);
+    if (!car) {
+      return res.status(404).json({
+        success: false,
+        message: "Car not found",
+      });
+    }
+
+    if (title) car.title = title;
+    if (description) car.description = description;
+    if (tags) car.tags = tags.split(",");
+
+    if (req.files && req.files.length > 0) {
+      for (const image of car.images) {
+        const publicId = image.split("/").slice(-1)[0].split(".")[0];
+        await cloudinary.uploader.destroy(`cars/${publicId}`);
+      }
+      car.images = files;
+    }
+    const updatedCar = await car.save();    
+    return res.status(200).json({
+      message: "Car details updated successfully",
+      car: updatedCar,
+      body: req.body,
+      files: req.files
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Error while updateing a car details ",
+      error,
+    });
+  }
+};

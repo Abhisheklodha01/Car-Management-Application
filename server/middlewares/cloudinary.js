@@ -7,13 +7,10 @@ cloudinaryV2.config({
 });
 
 export const uploadToCloudinary = async (req, res, next) => {
-  if (!req.files || req.files.length === 0) {
-    return res.status(400).json({
-      success: false,
-      message: "files not provided",
-    });
+  
+  if (!req.files && req.files.length === 0) {
+    return next();
   }
-
   try {
     const uploads = await Promise.all(
       req.files.map((file) => {

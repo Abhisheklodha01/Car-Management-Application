@@ -13,6 +13,7 @@ import { userContex } from "./contex/UserContex";
 import { useContext, useEffect } from "react";
 import { backendUrl } from "./utils/server";
 import axios from "axios";
+import UpdateCarDetails from "./pages/UpdateCarDetaills";
 
 function App() {
   const { isAuthenticated, setUser, setIsAuthenticated} =
@@ -49,6 +50,7 @@ function App() {
         <Route path="/upload-cars" element={<UploadCars />} />
         <Route path="/view-cars" element={<ViewCars />} />
         <Route path="/cardetail/:carId" element={<CarDetail />} />
+        <Route path="/updatecardetail/:carId" element={<UpdateCarDetails />} />
       </Routes>
       <Footer />
     </BrowserRouter>

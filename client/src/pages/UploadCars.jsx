@@ -28,6 +28,12 @@ const UploadCars = () => {
       });
       return;
     }
+    if (files.length == 0) {
+      toast.error("Image is required", {
+        position: "top-center",
+      });
+      return;
+    }
     const formData = new FormData();
     files.forEach((file) => {
       formData.append("files", file);
@@ -36,6 +42,7 @@ const UploadCars = () => {
     formData.append("description", description);
     formData.append("tags", tags);
     setLoading(true);
+    
     try {
       const { data } = await axios.post(`${backendUrl}/cars/upload`, formData, {
         headers: {
@@ -52,8 +59,6 @@ const UploadCars = () => {
       setTags("");
       setLoading(false);
     } catch (error) {
-      console.log(error);
-
       toast.error(error.response.data.message, {
         position: "top-center",
       });
@@ -125,6 +130,7 @@ const UploadCars = () => {
                     type="button"
                     onClick={() => handleRemoveFile(index)}
                     className="text-red-500 hover:underline ml-4"
+
                   >
                     Remove
                   </button>

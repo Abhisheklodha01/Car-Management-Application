@@ -99,14 +99,21 @@ const ViewCars = () => {
               <div className="flex flex-row">
                 <Link
                   to={`/cardetail/${car._id}`}
-                  className=" bg-green-500 py-2 px-8 
+                  className=" bg-green-500 py-2 px-6 
               rounded-md text-white text-center"
                 >
-                  View Full details
+                  Details
+                </Link>
+                <Link
+                  to={`/updatecardetail/${car._id}`}
+                  className=" bg-yellow-500 py-2 px-6 
+              rounded-md text-white text-center ml-5"
+                >
+                  Update
                 </Link>
                 <button
                   onClick={() => deleteCar(car?._id)}
-                  className="bg-red-500 py-2 px-8 rounded-md text-white ml-5 text-c"
+                  className="bg-red-500 py-2 px-6 rounded-md text-white ml-5 text-c"
                 >
                   {loading ? (
                     <div
