@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div className='h-44'
     >
-        <div className='text-gray-700'>
+        <div className='text-gray-700 bg-gray-100'>
           <p className='text-center text-xl pt-10'>Contect Us</p>
           <ul className='flex justify-center items-center flex-col md:flex-row mt-5 gap-4 md:gap-10'>
             <li>Email: support@carstore.com</li>

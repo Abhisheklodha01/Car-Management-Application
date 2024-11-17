@@ -8,6 +8,7 @@ export const CreateCarController = async (req, res) => {
 
     const car = await Car.create({
       userId: req.user._id,
+      user: req.user.name,
       title,
       description,
       carId: Date.now(),
@@ -140,3 +141,20 @@ export const UpdateCarDetails = async (req, res) => {
     });
   }
 };
+
+export const GetAllCars = async(req, res) => {
+  try {
+    const cars = await Car.find()
+    return res.status(200).json({
+      success: true,
+      message: "Cars find successfully",
+      cars
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success:false,
+      message: "Server error while fetching cars",
+      error
+    })
+  }
+}

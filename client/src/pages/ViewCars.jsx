@@ -77,7 +77,7 @@ const ViewCars = () => {
         <div className="mt-10 mb-10">
           {cars.map((car, index) => (
             <div
-              className="flex gap-5 m-5 ml-3 mr-6 md:mr-0  flex-col
+              className="flex gap-5 m-5 ml-3 mr-8 md:mr-0  flex-col
            bg-white p-6 rounded-md mx-auto"
               key={car._id}
             >

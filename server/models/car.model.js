@@ -17,8 +17,14 @@ const CarSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  user: {
+    type: String,
+    required: true
+  },
   tags: [String],
   images: [String],
+}, {
+  timestamps:true
 });
 
 const Car = mongoose.model("Car", CarSchema);

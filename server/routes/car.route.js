@@ -5,6 +5,7 @@ import { uploadToCloudinary } from "../middlewares/cloudinary.js";
 import {
   CreateCarController,
   DeleteCarController,
+  GetAllCars,
   GetCarByIdController,
   GetCarsController,
   UpdateCarDetails,
@@ -31,5 +32,6 @@ router.put(
   uploadToCloudinary,
   UpdateCarDetails
 );
+router.get("/getallcars", GetAllCars)
 
 export default router;

@@ -1,3 +1,4 @@
+import { useContext, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
@@ -9,11 +10,10 @@ import UploadCars from "./pages/UploadCars";
 import ViewCars from "./pages/ViewCars";
 import CarDetail from "./pages/CarDetail";
 import ForgotPassword from "./pages/ForgotPassword";
-import { userContex } from "./contex/UserContex";
-import { useContext, useEffect } from "react";
-import { backendUrl } from "./utils/server";
-import axios from "axios";
 import UpdateCarDetails from "./pages/UpdateCarDetaills";
+import axios from "axios";
+import { userContex } from "./contex/UserContex";
+import { backendUrl } from "./utils/server";
 
 function App() {
   const { isAuthenticated, setUser, setIsAuthenticated} =
@@ -43,6 +43,8 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
+      </Routes> 
+      <Routes> 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
