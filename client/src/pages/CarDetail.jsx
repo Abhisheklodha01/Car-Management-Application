@@ -58,7 +58,7 @@ const CarDetail = () => {
           <strong>Description: </strong> {carDetail?.description}
         </h1>
         <h1>
-          <strong>User Name: </strong> {car?.user || car?.userId}
+          <strong>User Name: </strong> {carDetail?.user || carDetail?.userId}
         </h1>
       </div>
       <h1 className="text-2xl font-bold text-gray-700 text-center">Images:</h1>

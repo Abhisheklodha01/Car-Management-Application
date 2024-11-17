@@ -6,14 +6,19 @@ import { userContex } from "../contex/UserContex.js";
 
 const Home = () => {
   const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(false)
   const { isAuthenticated } = useContext(userContex);
   const fetchCars = async () => {
+    setLoading(true)
     try {
       const { data } = await axios.get(`${backendUrl}/cars/getallcars`, {
         withCredentials: true,
       });
       setCars(data.cars);
-    } catch (error) {}
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
   };
 
   useEffect(() => {
@@ -32,7 +37,7 @@ const Home = () => {
         </p>
         <div className="mt-6">
           <Link
-            to={"/signup"}
+            to={isAuthenticated ? "/view-cars" :"/signup"}
             className="bg-white text-blue-500 px-6 py-3
              rounded shadow-md font-semibold hover:bg-blue-100 transition"
           >
@@ -40,6 +45,17 @@ const Home = () => {
           </Link>
         </div>
       </div>
+      {loading ? (
+        <div
+          className="animate-spin inline-block size-16 md:size-32 border-[3px] border-current
+           border-t-transparent text-blue-600 rounded-full
+            dark:text-blue-500 mt-56 ml-40 md:mt-52 md:ml-[600px]"
+          role="status"
+          aria-label="loading"
+        >
+          <span className="sr-only"></span>
+        </div>
+      ) : (
       <div className="md:mt-[270px] mt-[390px] mb-20">
         {cars.map((car, index) => (
           <div
@@ -64,7 +80,7 @@ const Home = () => {
             </p>
             <div className="flex flex-row">
               <Link
-                to={isAuthenticated ? `/cardetail/${car._id}` : "/signup"}
+                to={isAuthenticated ? `/cardetail/${car?._id}` : "/signup"}
                 className=" bg-green-500 py-2 px-6 
               rounded-md text-white text-center"
               >
@@ -74,6 +90,7 @@ const Home = () => {
           </div>
         ))}
       </div>
+      )}
     </div>
   );
 };
