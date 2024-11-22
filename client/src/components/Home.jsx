@@ -6,23 +6,43 @@ import { userContex } from "../contex/UserContex.js";
 
 const Home = () => {
   const [cars, setCars] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [keyword, setKeyword] = useState("");
   const { isAuthenticated } = useContext(userContex);
   const fetchCars = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const { data } = await axios.get(`${backendUrl}/cars/getallcars`, {
         withCredentials: true,
       });
       setCars(data.cars);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
+    }
+  };
+  const fetchCarsByQuery = async () => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(
+        `${backendUrl}/cars/getcars/${keyword}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setCars(data.cars);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCars();
+    if (keyword !== "" && loading) {
+      fetchCarsByQuery;
+    } else {
+      fetchCars();
+    }
   }, []);
 
   return (
@@ -37,7 +57,7 @@ const Home = () => {
         </p>
         <div className="mt-6">
           <Link
-            to={isAuthenticated ? "/view-cars" :"/signup"}
+            to={isAuthenticated ? "/view-cars" : "/signup"}
             className="bg-white text-blue-500 px-6 py-3
              rounded shadow-md font-semibold hover:bg-blue-100 transition"
           >
@@ -56,40 +76,69 @@ const Home = () => {
           <span className="sr-only"></span>
         </div>
       ) : (
-      <div className="md:mt-[270px] mt-[390px] mb-20">
-        {cars.map((car, index) => (
-          <div
-            className="flex gap-5 m-5 ml-3 mr-6 md:mr-0  flex-col
-           bg-white p-6 rounded-md mx-auto"
-            key={car._id}
-          >
-            <h2>
-              <strong>Car Name:</strong> {car.title.toUpperCase()}
-            </h2>
-            <p>
-              <strong>Car ID:</strong> {car.carId}
-            </p>
-            <p>
-              <strong>Description:</strong> {car.description}
-            </p>
-            <p>
-              <strong>Tags:</strong> {car.tags.join(", ")}
-            </p>
-            <p>
-              <strong>User:</strong> {car?.user || car?.userId}
-            </p>
-            <div className="flex flex-row">
-              <Link
-                to={isAuthenticated ? `/cardetail/${car?._id}` : "/signup"}
-                className=" bg-green-500 py-2 px-6 
-              rounded-md text-white text-center"
+        <div className="md:mt-[270px] mt-[390px] mb-20">
+          <div className="pt-20">
+            <div className="flex flex-col ml-10 text-gray-700 ">
+              <label htmlFor="search" className="font-bold text-lg">
+                Search By Keyword
+              </label>
+              <input
+                className="py-2 w-[300px] px-6 mt-1 rounded-md outline-none border-2 border-gray-400"
+                type="text"
+                placeholder="Enter a keyword"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+              />
+              <button
+                className="bg-blue-500 rounded-md py-2
+               px-6 w-[300px] mt-2 text-white"
+                onClick={fetchCarsByQuery}
               >
-                View Full Details
-              </Link>
+                Search
+              </button>
+              <h1 className="ml-32 mt-2 mb-2 text-xl">Or</h1>
+              <button
+                className="bg-blue-500 rounded-md py-2
+               px-6 w-[300px] mt-2 text-white"
+                onClick={fetchCars}
+              >
+                View All 
+              </button>
             </div>
           </div>
-        ))}
-      </div>
+          {cars.map((car, index) => (
+            <div
+              className="flex gap-5 m-5 ml-3 mr-6 md:mr-0  flex-col
+           bg-white p-6 rounded-md mx-auto"
+              key={car._id}
+            >
+              <h2>
+                <strong>Car Name:</strong> {car.title.toUpperCase()}
+              </h2>
+              <p>
+                <strong>Car ID:</strong> {car.carId}
+              </p>
+              <p>
+                <strong>Description:</strong> {car.description}
+              </p>
+              <p>
+                <strong>Tags:</strong> {car.tags.join(", ")}
+              </p>
+              <p>
+                <strong>User:</strong> {car?.user || car?.userId}
+              </p>
+              <div className="flex flex-row">
+                <Link
+                  to={isAuthenticated ? `/cardetail/${car?._id}` : "/signup"}
+                  className=" bg-green-500 py-2 px-6 
+              rounded-md text-white text-center"
+                >
+                  View Full Details
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

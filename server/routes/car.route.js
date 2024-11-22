@@ -7,6 +7,7 @@ import {
   DeleteCarController,
   GetAllCars,
   GetCarByIdController,
+  GetCarsByQuery,
   GetCarsController,
   UpdateCarDetails,
 } from "../controllers/car.controller.js";
@@ -33,5 +34,6 @@ router.put(
   UpdateCarDetails
 );
 router.get("/getallcars", GetAllCars)
+router.get("/getcars/:query", GetCarsByQuery)
 
 export default router;

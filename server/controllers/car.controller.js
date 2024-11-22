@@ -32,7 +32,7 @@ export const CreateCarController = async (req, res) => {
 
 export const GetCarsController = async (req, res) => {
   try {
-    const cars = await Car.find({ userId: req.user._id });
+    const cars = await Car.find({ userId: req.user._id }).sort({ createdAt: -1 });
     return res.status(200).json({
       success: true,
       message: "Car details fechted successfully",
@@ -126,12 +126,12 @@ export const UpdateCarDetails = async (req, res) => {
       }
       car.images = files;
     }
-    const updatedCar = await car.save();    
+    const updatedCar = await car.save();
     return res.status(200).json({
       message: "Car details updated successfully",
       car: updatedCar,
       body: req.body,
-      files: req.files
+      files: req.files,
     });
   } catch (error) {
     return res.status(500).json({
@@ -142,19 +142,50 @@ export const UpdateCarDetails = async (req, res) => {
   }
 };
 
-export const GetAllCars = async(req, res) => {
+export const GetAllCars = async (req, res) => {
   try {
-    const cars = await Car.find()
+    const cars = await Car.find().sort({ createdAt: -1 });
     return res.status(200).json({
       success: true,
       message: "Cars find successfully",
-      cars
-    })
+      cars,
+    });
   } catch (error) {
     return res.status(500).json({
-      success:false,
+      success: false,
       message: "Server error while fetching cars",
-      error
-    })
+      error,
+    });
   }
-}
+};
+
+export const GetCarsByQuery = async (req, res) => {
+  const query = req.params.query;
+  try {
+    const filter = {
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { description: { $regex: query, $options: "i" } },
+        { tags: { $regex: query, $options: "i" } },
+      ],
+    };
+    const cars = await Car.find(filter).sort({ createdAt: -1 })
+    if (cars.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No Matching Cars found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Cars found Successfully",
+      cars,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Error fetching cars",
+      error,
+    });
+  }
+};
