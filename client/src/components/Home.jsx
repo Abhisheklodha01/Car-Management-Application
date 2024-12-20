@@ -46,7 +46,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-gray-200 min-h-screen">
+    <div className="bg-gray-200 min-h-screen pb-2">
       <div className="container mx-auto px-4 py-12 text-center pt-44">
         <h1 className="text-4xl md:text-5xl font-bold">
           Welcome to Car Store Manager
@@ -69,7 +69,7 @@ const Home = () => {
         <div
           className="animate-spin inline-block size-16 md:size-32 border-[3px] border-current
            border-t-transparent text-blue-600 rounded-full
-            dark:text-blue-500 mt-56 ml-40 md:mt-52 md:ml-[600px]"
+            dark:text-blue-500 mt-56 ml-40 md:mt-40 md:ml-[700px]"
           role="status"
           aria-label="loading"
         >
