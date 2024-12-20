@@ -8,13 +8,13 @@ config()
 const port = process.env.PORT || 5000
 
 const CPU = os.cpus().length
+console.log(CPU);
 if (cluster.isPrimary) {
   for (let i = 0; i < CPU; i++) {
     cluster.fork()
   }
 }
 else {
-
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
