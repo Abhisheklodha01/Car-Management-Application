@@ -17,7 +17,7 @@ const NavBar = () => {
     navigate("/");
   };
   return (
-    <div className="h-16 flex flex-row justify-between items-center">
+    <div className="h-16 flex flex-row justify-between items-center font-semibold">
       <div className="">
         <Link to={"/"} className="p-4 text-xl text-gray-700">CarStore</Link>
       </div>
